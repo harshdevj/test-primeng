@@ -26,7 +26,7 @@ export class CustomHttp extends Http {
         });
 }*/
 
-    get1(url: string, options?: RequestOptionsArgs): Observable<Response> {
+    get(url: string, options?: RequestOptionsArgs): Observable<Response> {
         console.log('get...');
         return super.get(url, options)
             .catch(err => {
