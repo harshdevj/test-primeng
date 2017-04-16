@@ -5,11 +5,15 @@ import { HttpClient } from './http.service';
 import { Http } from '@angular/http';
 @Component({
     selector: 'test',
-    template: `Observable test {{data|async}}`
+    template: `
+        <ul>
+            <li *ngFor="#u of data">{{u}}</li>
+        </ul>
+    `
 })
 export class TestComponent {
 
-    private data: any;
+    private data: any = [];
 
     constructor(http: Http) {
         /*this.data = new Observable(o => {
@@ -26,7 +30,9 @@ export class TestComponent {
         });*/
 
         http.get('http://localhost:8081/listUsers').subscribe(
-            resp => console.info('sub: ', resp),
+            resp => {
+                this.data = resp.json();
+            },
             err => console.info('sub: ', err),
             () => console.warn('sub: ', 'Request completed!')
         )

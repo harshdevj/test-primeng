@@ -24,18 +24,22 @@ export class CustomHttp extends Http {
                     return super.request(url, op);
                 });
         });
-}*/ 
+}*/
 
     get(url: string, options?: RequestOptionsArgs): Observable<Response> {
         console.log('get...');
         return super.get(url, options)
             .catch(err => {
-                return this.post("http://localhost:8081/login", {})
-                    .flatMap((data: any) => {
-                        let headers = new Headers({ 'AUTH_TOKEN': 'xxxAAA' });
-                        let op = new RequestOptions({ headers: headers });
-                        return super.get(url, op);
-                    });
+                if (err && err.status === 401) {
+                    return this.post("http://localhost:8081/login", {})
+                        .flatMap((data: any) => {
+                            let headers = new Headers({ 'AUTH_TOKEN': 'xxxAAA' });
+                            let op = new RequestOptions({ headers: headers });
+                            return super.get(url, op);
+                        });
+                } else {
+                    return Observable.throw(err);
+                }
             });
 
         /*let subject = new Subject();
