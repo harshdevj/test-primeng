@@ -1,0 +1,28 @@
+<div class="parent-div" style="width: 100%; height: 100%;" #selector>
+    <!--<p-dataTable [value]="followers" [rows]="10" 
+        [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20,30,40]"
+         [scrollable]="true" #myTable>
+        <p-column field="id" header="ID {{height}}"></p-column>
+        <p-column field="login" header="Login {{parentHeight}}"></p-column>
+        <p-column field="site_admin" header="Site Admin"></p-column>
+        <p-column field="html_url" header="HTML Url"></p-column>
+        <p-column field="avatar_url" header="Avatar">
+            <ng-template let-col let-follower="rowData" pTemplate="body">
+                <img src="{{follower[col.field]}}" alt="" style="height: 65px;width: 65px;">
+            </ng-template>
+        </p-column>
+    </p-dataTable>-->
+    <form #zmyForm="ngForm">
+        <select name="branch" id="branch" [(ngModel)]="formData.br" (ngModelChange)="onBrChange($event)">
+            <option *ngFor="let b of staticData.branch; let isFirst = first" [value]="b">{{b}}</option>
+        </select><br>
+
+        <select name="product" id="product" [(ngModel)]="formData.product" (ngModelChange)="onProdChange($event)">
+            <option *ngFor="let b of staticData.productBranch[formData.br]; let isFirst = first" [value]="b">{{b}}</option>
+        </select><br>
+
+        <select name="source" id="source" [(ngModel)]="formData.source">
+            <option *ngFor="let b of staticData.source[formData.product]; let isFirst = first" [value]="b">{{b}}</option>
+        </select><br>
+    </form>
+</div>
